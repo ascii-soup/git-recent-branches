@@ -29,9 +29,20 @@ if !ARGV[0].nil?
 end
 
 number = 0
-recent_branches.each do |branchName|
-  puts "[#{number}] #{branchName}"
+recent_branch_list = []
+longest_commit_message_length = 0
+longest_branch_name_length = 0
+recent_branches.each do |branch_name|
+  last_commit_message = `git log -1 --pretty=%B #{branch_name} 2>/dev/null`
+  last_commit_message = last_commit_message.lines.first.gsub("\n", "") unless last_commit_message == ""
+  longest_commit_message_length = last_commit_message.length unless last_commit_message.length <= longest_commit_message_length
+  longest_branch_name_length = branch_name.length unless branch_name.length <= longest_branch_name_length
+  recent_branch_list << { :number => number, :branch_name => branch_name, :commit_msg => last_commit_message }
   number += 1
+end
+
+recent_branch_list.each do |branch_info|
+  printf "%#{branch_limit.to_s.length + 2}s %-#{longest_branch_name_length + 2}s %-#{longest_commit_message_length}s\n", "[#{branch_info[:number]}]", branch_info[:branch_name], branch_info[:commit_msg]
 end
 
 print "Branch number: "
