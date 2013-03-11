@@ -34,7 +34,7 @@ Optional
 --------
 I tend to add the following aliases to my git configuration to make this command easier to use:
 ```
-[aliases]
+[alias]
   rb = recent-branches
   lb = recent-branches 0
 ```
