@@ -37,7 +37,7 @@ recent_branches.each do |branch_name|
   last_commit_message = last_commit_message.lines.first.gsub("\n", "") unless last_commit_message == ""
   longest_commit_message_length = last_commit_message.length unless last_commit_message.length <= longest_commit_message_length
   longest_branch_name_length = branch_name.length unless branch_name.length <= longest_branch_name_length
-  recent_branch_list << { :number => number, :branch_name => branch_name, :commit_msg => last_commit_message }
+  recent_branch_list << { :number => number, :branch_name => branch_name.strip, :commit_msg => last_commit_message.strip }
   number += 1
 end
 
