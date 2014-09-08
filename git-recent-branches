@@ -4,7 +4,7 @@ branch_limit = 10 if branch_limit == 0
 
 show_current_branch = (`git config --get recent.showcurrent 2>/dev/null`.to_i == 1) ? true : false
 current_branch = `git rev-parse --abbrev-ref HEAD 2>/dev/null`.chomp
-all_branches = `git reflog 2>/dev/null | \\grep -Pio "moving from ([^\\s]+)" | \\awk '{ print $3 }' | \\grep -Piv "[0-9a-f]{40}"`.split("\n")
+all_branches = `git reflog 2>/dev/null | \\grep -Eio "moving from ([^\\s]+)$" | \\awk '{ print $3 }' | \\grep -Eiv "[0-9a-f]{40}"`.split("\n")
 
 if all_branches.length == 0
   puts "No recently viewed branches"
